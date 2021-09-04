@@ -1,0 +1,7 @@
+{
+  "name": "PwaExample",
+  "short_name": "My App",
+  "display": "fullscreen",
+  "start_url": "/",
+  "scope": "./././"
+}

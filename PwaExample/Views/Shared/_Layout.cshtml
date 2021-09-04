@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="manifest" href="~/manifest1.0.json">
+    <link rel="manifest" href="~/manifest.webmanifest" />
+    <link rel="apple-touch-icon" sizes="512x512" href="~/images/512x512.png" />
+    <title>@ViewData["Title"] - PwaExample</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+
+    <style>
+
+        .scr-splash {
+            top: 0px;
+            height: 100%;
+            left: 0px;
+            position: fixed;
+            width: 100%;
+            z-index: 999999;
+            border: 0px;
+            background-color: rgba(1, 1, 1, 0.5);
+            font-family: arial;
+            font-size: 10pt;
+            text-align: center;
+            vertical-align: middle;
+            display: table;
+        }
+    </style>
+</head>
+<body>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PwaExample</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item">
+                                    <a  onclick="$('#dvSplash').show()" class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <div class="container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2021 - PwaExample - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+    }
+    else
+    {
+        <div class="container d-flex h-100 justify-content-center">
+            <div class="row justify-content-center align-self-center">
+
+                <div class="col-md-12 text-center">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    }
+
+    <div id="dvSplash" class="scr-splash" style="display: none">
+        <div style="display: table-cell; vertical-align: middle;">
+            <div style="text-align: center;">
+                <i class="spinner-body fa fa-spinner fa-spin fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/pwacompat@2.0.6/pwacompat.min.js"
+            integrity="sha384-GOaSLecPIMCJksN83HLuYf9FToOiQ2Df0+0ntv7ey8zjUHESXhthwvq9hXAZTifA"
+            crossorigin="anonymous"></script>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/pwa-installer1.0.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>
